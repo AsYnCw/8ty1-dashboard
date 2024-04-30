@@ -36,11 +36,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.engine('ejs', require('ejs').renderFile)
-app.set('view engine', './views/');
+app.set('views', './views/');
 
 app.get('/', (req, res) => {
-    console.log(req.isAuthenticated() ? req.user : null);
-    res.send('Hello!')
+    res.render('index.ejs', {
+        user: req.isAuthenticated() ? req.user : null
+    })
 });
 
 app.get('/api/login', (req, res, next) => {
