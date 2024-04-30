@@ -36,13 +36,11 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.engine('ejs', require('ejs').renderFile)
+app.engine('html', require('ejs').renderFile)
 app.set('views', path.join(__dirname, '/views/'));
 
-app.use(express.static(path.join(__dirname, "views")));
-
 app.get('/', (req, res) => {
-    res.render('index.ejs', {
+    res.render('index.html', {
         user: req.isAuthenticated() ? req.user : null
     })
 });
