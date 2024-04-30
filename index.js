@@ -4,7 +4,8 @@ const passport = require('passport');
 const Discord = require('passport-discord');
 const session = require('express-session');
 const memorystore = require('memorystore')(session);
-const url = require('node:url')
+const url = require('node:url');
+const path = require('node:path');
 
 const app = express();
 
@@ -36,7 +37,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.engine('ejs', require('ejs').renderFile)
-app.set('views', './views/');
+app.set('views', path.join(__dirname, '/views/'));
 
 app.get('/', (req, res) => {
     res.render('index.ejs', {
