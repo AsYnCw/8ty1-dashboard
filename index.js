@@ -39,6 +39,8 @@ app.use(passport.session());
 app.engine('html', require('ejs').renderFile)
 app.set('views', path.join(__dirname, '/views/'));
 
+app.use('/static', express.static(path.join(__dirname, 'public')));
+
 app.get('/', (req, res) => {
     res.render('index.html', {
         user: req.isAuthenticated() ? req.user : null
@@ -67,6 +69,24 @@ app.get('/api/callback', passport.authenticate('discord', { failureRedirect: "/"
         res.redirect('/')
     }
 });
+
+app.get('/dashboard', checkAuth, (req, res) => {
+    res.render('dashboard/index.html', {
+        user: req.user
+    })
+});
+
+/**
+ * @param {Express.Request} req 
+ * @param {Express.Response} res 
+ */
+function checkAuth(req, res, next) {
+    if (req.isAuthenticated()) {
+        next()
+    } else {
+        res.redirect('/api/login');
+    }
+}
 
 app.listen(3000, () => {
     console.log('Alive.');
