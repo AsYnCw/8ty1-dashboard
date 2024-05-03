@@ -11,14 +11,14 @@
 
     <div class="hero min-h-screen bg-base-200">
         <div class="hero-content flex-col lg:flex-row-reverse">
-            <img src="https://cdn.discordapp.com/embed/avatars/0.png" class="max-w-sm rounded-lg shadow-2xl" />
+            <img src="https://cdn.discordapp.com/embed/avatars/0.png" class="max-w-sm rounded-lg shadow-2xl" style="width: 128px;height: 128px;"/>
             <div>
                 <h1 class="text-5xl font-bold">8ty1</h1>
                 <p class="py-6">8ty1 is a new <strong>Discord</strong> bot. A multipurpose bot with features like welcomes/goodbyes, leveling, moderation & much more.</p>
                 <% if (user) { %> 
-                    <button class="btn btn-primary">Dashboard</button>
+                    <button class="btn btn-primary" onclick="window.location.href='/dashboard'">Dashboard</button>
                 <% } else { %>
-                    <button class="btn btn-primary">Login</button>
+                    <button class="btn btn-primary" onclick="window.location.href='/api/login'">Login</button>
                     <% } %>
             </div>
         </div>

@@ -6,6 +6,15 @@ const session = require('express-session');
 const memorystore = require('memorystore')(session);
 const url = require('node:url');
 const path = require('node:path');
+const API = require('./utils/API');
+const modules = require('./utils/modules.json');
+const { deflateRawSync } = require('node:zlib');
+
+const config = {
+    invite_uri: 'https://discord.com/oauth2/authorize?client_id=1220112684612190329&permissions=12096037842102&scope=bot',
+}
+
+console.log(new Array(["invite_uri", "a", "e"]).filter(v => !v.at(0)))
 
 const app = express();
 
@@ -74,6 +83,63 @@ app.get('/dashboard', checkAuth, (req, res) => {
     res.render('dashboard/index.html', {
         user: req.user
     })
+});
+
+app.get('/dashboard/manage/:id', checkAuth, async (req, res) => {
+    const { id } = req.params;
+    const data = await API.guilds.get(id);
+
+    if (!data.in) {
+        return res.redirect(`/invite?prompt=true&gid=${id}`);
+    }
+
+    res.render('dashboard/manage/home.html', {
+        guild: data.res ? data.res : null,
+        user: req.user,
+        modules: modules
+    });
+});
+
+app.get('/dashboard/manage/:id/:module_name', checkAuth, async (req, res) => {
+    const { id, module_name } = req.params;
+    const data = await API.guilds.get(id);
+
+    if (!data.in) {
+      return res.redirect(`/invite?prompt=true&text=${encodeURI("You don't have the bot in this guild, do you want to add it?")}`);
+    }
+
+    if (!modules[0].includes(module_name)) {
+        return res.redirect(`/error?text=${encodeURI('Invalid module name')}&type=warn`);
+    }
+
+    res.render(`dashboard/manage/${module_name}.html`, {
+        user: req.user,
+        guild: data.res
+    })
+});
+
+app.get('/invite', (req, res) => {
+    const { prompt, gid } = req.query;
+    if (prompt === "true") {
+        res.render('invite.html', {
+            gid: gid ? gid : null
+        });
+    } else {
+        res.redirect(config.invite_uri)
+    }
+});
+
+app.get('/error', (req, res) => {
+    const { type, text } = req.query;
+
+    if (typeof type != "string") {
+        return res.json('Invalid type.')
+    }
+
+    res.render('error.html', {
+        text: text ? text : null,
+        type: type
+    });
 });
 
 /**

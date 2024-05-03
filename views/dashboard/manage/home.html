@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/output.css">
+    <title>8ty1 - Manage</title>
+</head>
+<body>
+    <%- include("../../includes/Navbar.html") %>
+
+    <div class="pt-5 text-center text-5xl font-bold font-mono pb-36">8ty1 &#x2715; <%- guild.name %></div>
+
+    <div class="flex flex-wrap space-x-4 space-y-4 pb-36">
+        <% modules.map(m => m).forEach((module) => { %>
+         <% if (module.name) { %> 
+            <div class="card w-96 glass text-neutral-content">
+                <div class="card-body items-center text-center">
+                  <h2 class="card-title"><%- module.name %></h2>
+                  <p><%- module.description %></p>
+                  <div class="card-actions justify-center">
+                    <button class="btn btn-primary" onclick="window.location.href='/dashboard/manage/<%- guild.id %>/<%- module.path %>'">Manage</button>
+                  </div>
+                </div>
+              </div>
+              <% } %>
+        <% }) %>
+    </div>
+
+    <%- include("../../includes/Footer.html") %>
+</body>
+</html>

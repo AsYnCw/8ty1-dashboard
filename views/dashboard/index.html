@@ -9,25 +9,26 @@
 <body>
     <%- include("../includes/Navbar.html") %>
 
-    <div class="flex flex-wrap space-x-4 gap-4 py-8">
-        <% user.guilds.forEach((guild) => { %>
-        <div class="card w-90 bg-base-100 image-full shrink-0">
-            <figure>
-                <% if (guild.icon) { %> 
-                    <img src="https://cdn.discordapp.com/icons/<%- guild.id -%>/<%- guild.icon %>.png" alt="Guild Icon" />
-                <% } else { %>
-                    <img src="https://cdn.discordapp.com/embed/avatars/0.png" alt="No Guild Icon" />
-                    <% } %>
+    <div class="pt-10 pb-10 text-center font-bold text-5xl font-mono">8ty1 &#x2715; <%- user.username %></div>
 
-            </figure>
-            <div class="card-body">
-                <h2 class="card-title"><%- guild.name %></h2>
-                <p>Do you want to manage <%- guild.name %>?</p>
-                <div class="card-actions justify-end">
-                    <button onclick="window.location.href='/dashboard/manage/<%- guild.id %>'" class="btn btn-primary">Manage</button>
+    <div class="flex flex-wrap space-x-4 space-y-4">
+        <% user.guilds.forEach((guild) => { %>
+            <div class="card w-96 bg-base-100 shadow-xl dark:shadow-cyan-500/50 focus:shadow-2xl">
+                <figure class="px-10 pt-10">
+                    <% if (guild.icon) { %>
+                        <img src="https://cdn.discordapp.com/icons/<%- guild.id %>/<%- guild.icon %>.png" alt="Server Icon" class="rounded-xl" />
+                    <% } else { %> 
+                        <img src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Discord icon" style="width: 128px;height: 128px;" class="rounded-xl" />
+                    <% } %>
+                </figure>
+                <div class="card-body items-center text-center">
+                  <h2 class="card-title"><%- guild.name %></h2>
+                  <p>Want to manage <%- guild.name %>?</p>
+                  <div class="card-actions">
+                    <button class="btn btn-primary" onclick="window.location.href='/dashboard/manage/<%- guild.id %>'">Manage</button>
+                  </div>
                 </div>
-            </div>
-        </div>
+              </div>
         <% }) %>
     </div>
 

@@ -1,0 +1,28 @@
+[
+    [
+        "welcome-leave",
+        "giveaways",
+        "action-log",
+        "moderation"
+    ],
+    {
+        "name": "Welcome / Leave",
+        "description": "Manage the welcome / leave module.",
+        "path": "welcome-leave"
+    },
+    {
+        "name": "Giveaways",
+        "description": "Manage the giveaways module.",
+        "path": "giveaways"
+    },
+    {
+        "name": "Action Log",
+        "description": "Manage the action log module.",
+        "path": "action-log"
+    },
+    {
+        "name": "Moderation",
+        "description": "Manage the moderation module.",
+        "path": "moderation"
+    }
+]
